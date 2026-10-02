@@ -45,7 +45,7 @@ test("counting tabulation correctly", async ({ page }) => {
   const input = page.locator("#box");
   const charCounter = page.locator("span#character_count");
 
-  const text =`	  lorem ipsum `; //text with tabulations
+  const text =`\t  lorem ipsum `; //text with tabulations
 
   await input.fill(text);
 
@@ -65,4 +65,47 @@ test("counting with special chars", async ({ page }) => {
   // Expect the correct number of spaces + tabulations + chars + special chars
   await expect(charCounter).toHaveText("42");
 });
+
+
+test("Line break \\n shouldn't be counted", async ({ page }) => {
+  await page.goto(url);
+  const input = page.locator("#box");
+  const charCounter = page.locator("span#character_count");
+
+  const text =`Hello\nWorld`; //text with tabulations
+
+  await input.fill(text);
+
+  // Expect 10 chars
+  await expect(charCounter).toHaveText("10");
+});
+
+test("Line break \\r\\n shouldn't be counted", async ({ page }) => {
+  await page.goto(url);
+  const input = page.locator("#box");
+  const charCounter = page.locator("span#character_count");
+
+  const text =`Hello\r\nWorld`; //text with tabulations
+
+  await input.fill(text);
+
+  // Expect 10 chars
+  await expect(charCounter).toHaveText("10");
+});
+
+test("Line break \\r shouldn't be counted", async ({ page }) => {
+  await page.goto(url);
+  const input = page.locator("#box");
+  const charCounter = page.locator("span#character_count");
+
+  const text =`Hello\rWorld`; //text with tabulations
+
+  await input.fill(text);
+
+  // Expect 10 chars
+  await expect(charCounter).toHaveText("10");
+});
+
+
+
 
