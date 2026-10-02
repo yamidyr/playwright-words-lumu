@@ -38,12 +38,12 @@ test("Char '&' is a word", async ({ page }) => {
   const input = page.locator("#box");
   const wordCounter = page.locator("span#word_count");
 
-  const text =`Hello &`;
+  const text =`&`;
 
   await input.fill(text);
 
   // Expect 0
-  await expect(wordCounter).toHaveText("2");
+  await expect(wordCounter).toHaveText("1");
 });
 
 test("Numbers are words", async ({ page }) => {
